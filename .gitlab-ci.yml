@@ -1,0 +1,15 @@
+stages:      
+  - deploy
+
+deploy-job-staging: 
+  stage: deploy
+  only:
+    - staging
+  tags:
+    - staging
+  script:
+    - cd ~/local-mks-api
+    - git pull
+    - go mod download
+    - CGO_ENABLED=1 GOOS=linux go build -o binary
+    - /home/kecilin/.nvm/versions/node/v22.1.0/bin/pm2 restart local-mks-api || /home/kecilin/.nvm/versions/node/v22.1.0/bin/pm2 start --name local-mks-api ./binary

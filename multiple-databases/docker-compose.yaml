@@ -1,0 +1,25 @@
+version: '3'
+
+volumes:
+  mongodb-volume:
+
+networks:
+  mynetwork:
+    driver: bridge
+    
+services:
+
+  # Database using MongoDB
+  mongodb:
+    networks: 
+      - mynetwork
+    image: mongo:5.0
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=example_db
+      - MONGO_INITDB_ROOT_USERNAME=dummy_user
+      - MONGO_INITDB_ROOT_PASSWORD=dummy_password
+    volumes:
+      - mongodb-volume:/data/db

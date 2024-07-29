@@ -1,0 +1,6 @@
+.git
+.gitlab-ci.yml
+.gitignore
+docker-compose*
+docker-swarm*
+*.sqlite3
