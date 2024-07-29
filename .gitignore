@@ -1,9 +1,0 @@
-tmp/*
-files/*
-.env
-.secret.env
-air/
-*.sqlite3
-*.sqlite 
-*.db
-releases/*

@@ -1,6 +1,0 @@
-projectKey=local-mks-api
-serverUrl=http://localhost:9000
-serverVersion=10.5.1.90531
-dashboardUrl=http://localhost:9000/dashboard?id=local-mks-api
-ceTaskId=19351c01-f226-42c2-83e3-3cdf73eecb0f
-ceTaskUrl=http://localhost:9000/api/ce/task?id=19351c01-f226-42c2-83e3-3cdf73eecb0f
