@@ -1,11 +1,13 @@
 package handler
 
-import "net/http"
+import (
+	"github.com/gin-gonic/gin"
+)
 
-type Handler interface {
-	Create(w http.ResponseWriter, r *http.Request)
-	Read(w http.ResponseWriter, r *http.Request)
-	Update(w http.ResponseWriter, r *http.Request)
-	Delete(w http.ResponseWriter, r *http.Request)
-	List(w http.ResponseWriter, r *http.Request)
+type CompressionHandler interface {
+	Create(ctx *gin.Context)
+	Read(ctx *gin.Context)
+	Update(ctx *gin.Context)
+	Delete(ctx *gin.Context)
+	List(ctx *gin.Context)
 }
