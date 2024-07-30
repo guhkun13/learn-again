@@ -11,19 +11,16 @@ import (
 )
 
 const (
-	TableCompression      = "compression"
-	TableCronAutoCompress = "cron_auto_compress"
+	TableUser = "user"
 )
 
 type TablesName struct {
-	CronAutoCompress string
-	Compression      string
+	User string
 }
 
 func getTablesName() *TablesName {
 	return &TablesName{
-		CronAutoCompress: TableCronAutoCompress,
-		Compression:      TableCompression,
+		User: TableUser,
 	}
 }
 

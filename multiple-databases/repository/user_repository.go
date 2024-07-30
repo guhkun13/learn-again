@@ -8,11 +8,9 @@ import (
 )
 
 type UserRepository interface {
-	Create(data model.User) error
+	Create(req dto.CreateUser) error
 	List() (model.Users, error)
 	Read(id int) (model.User, error)
-	Update(data model.User, req dto.UpdateUser) error
-	Delete(data model.User) error
 }
 
 type UserRepositoryImpl struct {
