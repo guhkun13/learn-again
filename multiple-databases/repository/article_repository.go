@@ -7,24 +7,22 @@ import (
 	"github.com/guhkun13/learn-again/multiple-databases/model"
 )
 
-type UserRepository interface {
+type ArticleRepository interface {
 	Create(req dto.CreateUser) error
 	List() (model.Users, error)
 	Read(id int) (model.User, error)
-	Update(id int, req dto.UpdateUser) error
-	Delete(id int) error
 }
 
-type UserRepositoryImpl struct {
+type ArticleRepositoryImpl struct {
 	Env    *config.EnvironmentVariable
 	WrapDB *database.WrapDB
 }
 
-func NewUserRepositoryImpl(
+func NewArticleRepositoryImpl(
 	env *config.EnvironmentVariable,
 	wrapDB *database.WrapDB,
-) UserRepository {
-	return &UserRepositoryImpl{
+) ArticleRepository {
+	return &ArticleRepositoryImpl{
 		Env:    env,
 		WrapDB: wrapDB,
 	}

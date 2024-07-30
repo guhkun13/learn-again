@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func (r *UserRepositoryImpl) runQuery(query string) (model.Users, error) {
+func (r *LogRepositoryImpl) runQuery(query string) (model.Users, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), r.Env.Database.Timeout.Read)
 	defer cancel()
 
@@ -45,7 +45,7 @@ func (r *UserRepositoryImpl) runQuery(query string) (model.Users, error) {
 	return result, nil
 }
 
-func (r *UserRepositoryImpl) Create(req dto.CreateUser) error {
+func (r *LogRepositoryImpl) Create(req dto.CreateUser) error {
 	query := fmt.Sprintf("INSERT INTO %s (name, age) VALUES (?, ?)", r.WrapDB.SqliteApp.Tables.User)
 
 	args := []any{req.Name, req.Age}
@@ -65,7 +65,7 @@ func (r *UserRepositoryImpl) Create(req dto.CreateUser) error {
 	return nil
 }
 
-func (r *UserRepositoryImpl) List() (model.Users, error) {
+func (r *LogRepositoryImpl) List() (model.Users, error) {
 	query := fmt.Sprintf("SELECT * FROM %s ", r.WrapDB.SqliteApp.Tables.User)
 
 	res, err := r.runQuery(query)
@@ -77,7 +77,7 @@ func (r *UserRepositoryImpl) List() (model.Users, error) {
 	return res, nil
 }
 
-func (r *UserRepositoryImpl) Read(id int) (model.User, error) {
+func (r *LogRepositoryImpl) Read(id int) (model.User, error) {
 	query := fmt.Sprintf("SELECT * FROM %s WHERE id=?", r.WrapDB.SqliteApp.Tables.User, id)
 
 	res, err := r.runQuery(query)
@@ -87,42 +87,4 @@ func (r *UserRepositoryImpl) Read(id int) (model.User, error) {
 	}
 
 	return res[0], nil
-}
-
-func (r *UserRepositoryImpl) Update(id int, req dto.UpdateUser) error {
-	query := fmt.Sprintf("UPDATE %s SET name=?, age=? WHERE id=?", r.WrapDB.SqliteApp.Tables.User)
-
-	args := []interface{}{req.Name, req.Age, id}
-
-	err := ExecQuery(DBStatement{
-		db:      r.WrapDB.SqliteApp.DB,
-		timeout: r.Env.Database.Timeout.Write,
-		query:   query,
-		args:    args,
-	})
-
-	if err != nil {
-		log.Error().Err(err).Str("query", query).Msg("execQuery failed")
-		return err
-	}
-
-	return nil
-}
-
-func (r *UserRepositoryImpl) Delete(id int) error {
-	query := fmt.Sprintf("DELETE FROM %s WHERE id=?", r.WrapDB.SqliteApp.Tables.User)
-
-	err := ExecQuery(DBStatement{
-		db:      r.WrapDB.SqliteApp.DB,
-		timeout: r.Env.Database.Timeout.Write,
-		query:   query,
-		args:    []interface{}{id},
-	})
-
-	if err != nil {
-		log.Error().Err(err).Str("query", query).Msg("execQuery failed")
-		return err
-	}
-
-	return nil
 }
